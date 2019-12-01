@@ -17,7 +17,7 @@ func main() {
 
 	routes := mux.NewRouter()
 
-	db := model.WeeHackDB{}
+	db := model.LariLoftDB{}
 	//Inicialização do repositorio
 	db.MustInit()
 
@@ -46,10 +46,10 @@ func main() {
 
 	//Rotas de consulta
 	routes.HandleFunc("/api/visit/{id:[0-9]+}", apiServer.GetVisitHandle).Methods("GET")
-	routes.HandleFunc("/api/visit/all", apiServer.GetAllVisitsHandle).Methods("GET")
+	routes.HandleFunc("/api/visit/{userId:[0-9]+}", apiServer.GetVisitApartmentsByUserHandle).Methods("GET")
 
 	routes.HandleFunc("/api/apartment/{id:[0-9]+}", apiServer.GetApartmentHandle).Methods("GET")
-	routes.HandleFunc("/api/apartment/{userId:[0-9]+}", apiServer.GetVisitApartmentsByUserHandle).Methods("GET")
+	routes.HandleFunc("/api/apartment/all", apiServer.GetAllApartmentsHandle).Methods("GET")
 
 	routes.HandleFunc("/api/agent/{id:[0-9]+}", apiServer.GetAgentHandle).Methods("GET")
 	routes.HandleFunc("/api/agent/all", apiServer.GetAllAgentsHandle).Methods("GET")
@@ -58,7 +58,7 @@ func main() {
 	routes.HandleFunc("/api/user/all", apiServer.GetAllUsersHandle).Methods("GET")
 
 	//Rotas de criação
-	routes.HandleFunc("/api/visit", apiServer.CreateVisiyHandle).Methods("POST")
+	routes.HandleFunc("/api/visit", apiServer.CreateVisitHandle).Methods("POST")
 
 	routes.HandleFunc("/api/login/{name}", apiServer.LoginUserHandle).Methods("POST")
 
@@ -70,8 +70,6 @@ func main() {
 
 	http.Handle("/", routes)
 	http.HandleFunc("/sendIntention", chatHandler.SendViaPost)
-
-	go chatHandler.HandleMessages()
 
 	log.Println("http server started on " + os.Getenv("PORT"))
 	log.Println("database started on " + model.Connection())
