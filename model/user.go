@@ -8,9 +8,9 @@ import (
 
 type User struct {
 	ID              int64   `gorm:"primary_key" json:"id,omitempty"`
-	Name            string  `gorm:"name" json:"name,omitempty"`
+	Name            string  `gorm:"username" json:"name,omitempty"`
 	Age             int64   `gorm:"age" json:"age,omitempty"`
-	Work            string  `gorm:"work" json:"work,omitempty"`
+	Work            string  `gorm:"actual_work" json:"work,omitempty"`
 	ActualNeighbor  string  `gorm:"actual_neighbor" json:"actualNeighbor,omitempty"`
 	DesiredNeighbor string  `gorm:"desired_neighbor" json:"desiredNeighbor,omitempty"`
 	Motive          string  `gorm:"motive" json:"motive,omitempty"`
@@ -39,6 +39,19 @@ func (dsd *LariLoftDB) GetUser(id int) (*User, error) {
 	user := User{}
 
 	result := dsd.Db.Table("public.users").First(&user, "id = ?", id)
+
+	if result.Error != nil && !result.RecordNotFound() {
+		log.Println("error on get data from user", result.Error)
+		return nil, result.Error
+	}
+	return &user, nil
+}
+
+//GetUsers: retorna um usuário
+func (dsd *LariLoftDB) GetUserByName(name string) (*User, error) {
+	user := User{}
+
+	result := dsd.Db.Table("public.users").First(&user, "name = ?", name)
 
 	if result.Error != nil && !result.RecordNotFound() {
 		log.Println("error on get data from user", result.Error)

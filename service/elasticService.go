@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	indexName = "chat"
+	indexName = "interests"
 	docType   = "log"
 	appName   = "lariloft-api"
 )

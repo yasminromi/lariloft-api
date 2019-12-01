@@ -17,47 +17,14 @@ type Visit struct {
 	Opinion     string  `gorm:"opinion" json:"opinion,omitempty"`
 }
 
-//CreateHackathonUser: criar associação de hackathon e hackathoner
-func (dsd *WeeHackDB) CreateHackathonUser(hackathonUser *HackathonUser) error {
-	result := dsd.Db.Table("public.hackathon_user").Create(hackathonUser)
+func (dsd *LariLoftDB) CreateVisit(visit *Visit) error {
+	result := dsd.Db.Table("public.visits").Create(visit)
 	if result.Error != nil {
 		return result.Error
 	}
 	return nil
 }
 
-//CreateHackathonUser: criar associação de hackathon e hackathoner
-func (dsd *WeeHackDB) CreateByUserID(userID int64, hackathonIDs []int64) error {
-
-	for _, hackathonID := range hackathonIDs {
-
-		hackathonUser := &HackathonUser{
-			HackathonID: hackathonID,
-			UserID:      userID,
-		}
-
-		dsd.CreateHackathonUser(hackathonUser)
-	}
-	return nil
-}
-
-//CreateHackathonUser: criar associação de hackathon e hackathoner
-func (dsd *WeeHackDB) CreateByHackathonID(hackathonID int64, userIDs []int64) error {
-
-	for _, userID := range userIDs {
-
-		hackathonUser := &HackathonUser{
-			HackathonID: hackathonID,
-			UserID:      userID,
-		}
-
-		dsd.CreateHackathonUser(hackathonUser)
-	}
-
-	return nil
-}
-
-//GetScouts: retorna uma associação de hackathon e hackathoner
 func (dsd *LariLoftDB) GetVisit(id int) (*Visit, error) {
 	visit := Visit{}
 	result := dsd.Db.Table("public.visits").Where("id = ?", id).First(&visit)
@@ -68,13 +35,12 @@ func (dsd *LariLoftDB) GetVisit(id int) (*Visit, error) {
 	return &visit, nil
 }
 
-//GetUsers: retorna todos os hackathon
-func (dsd *WeeHackDB) GetAllHackathonUsers() (*[]HackathonUser, error) {
-	hackathonUsers := []HackathonUser{}
-	result := dsd.Db.Table("public.hackathon").Find(&hackathonUsers)
+func (dsd *LariLoftDB) GetAllVisitApartmentsByUser(userID int) (*[]Apartment, error) {
+	apartments := []Apartment{}
+	result := dsd.Db.Table("public.visits").Where("user_id = ?", userID).Find(&apartments)
 	if result.Error != nil {
-		log.Println("error on get data from hackathonUser", result.Error)
+		log.Println("error on get data from visit", result.Error)
 		return nil, result.Error
 	}
-	return &hackathonUsers, nil
+	return &apartments, nil
 }
