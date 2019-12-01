@@ -35,7 +35,7 @@ func (e *ElasticService) SaveToElastic(ctx context.Context, payload model.Intere
 		}
 	}
 
-	var user = model.User {
+	var user = model.User{
 		Name:            payload.User.Name,
 		Age:             payload.User.Age,
 		Work:            payload.User.Work,
@@ -53,21 +53,21 @@ func (e *ElasticService) SaveToElastic(ctx context.Context, payload model.Intere
 		Msisdn:          payload.User.Msisdn,
 	}
 
-	var apartment = model.Apartment {
-		Lat              payload.Apartment.Lat,
-		Long             payload.Apartment.Long,
-		NumberOfRooms    payload.Apartment.NumberOfRooms,
-		MaxEstimate      payload.Apartment.MaxEstimate,
-		MinEstimate      payload.Apartment.MinEstimate,
-		KitchenSize      payload.Apartment.KitchenSize,
-		LivingRoomSize   payload.Apartment.LivingRoomSize,
-		HasOffice        payload.Apartment.HasOffice,
-		HasPool          payload.Apartment.HasPool,
-		AcceptPet        payload.Apartment.AcceptPet,
-		PriceCondominium payload.Apartment.PriceCondominium,
+	var apartment = model.Apartment{
+		Lat:              payload.Apartment.Lat,
+		Long:             payload.Apartment.Long,
+		NumberOfRooms:    payload.Apartment.NumberOfRooms,
+		MaxEstimate:      payload.Apartment.MaxEstimate,
+		MinEstimate:      payload.Apartment.MinEstimate,
+		KitchenSize:      payload.Apartment.KitchenSize,
+		LivingRoomSize:   payload.Apartment.LivingRoomSize,
+		HasOffice:        payload.Apartment.HasOffice,
+		HasPool:          payload.Apartment.HasPool,
+		AcceptPet:        payload.Apartment.AcceptPet,
+		PriceCondominium: payload.Apartment.PriceCondominium,
 	}
 
-	var interest = model.Interest {
+	var interest = model.Interest{
 		CreatedAt: payload.CreatedAt,
 		Apartment: apartment,
 		User:      user,
