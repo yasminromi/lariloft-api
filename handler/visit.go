@@ -33,14 +33,15 @@ func (as *ApiServer) GetVisitHandle(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (as *ApiServer) GetAllVisitsHandle(w http.ResponseWriter, r *http.Request) {
+func (as *ApiServer) GetVisitApartmentsByUserHandle(w http.ResponseWriter, r *http.Request) {
 
 	enableCors(&w)
 
 	vars := mux.Vars(r)
 	userID := vars["userId"]
+	idInt, _ := strconv.Atoi(userID)
 
-	visits, err := as.DB.GetAllVisitApartmentsByUser(userID)
+	visits, err := as.DB.GetAllVisitApartmentsByUser(idInt)
 	if err != nil {
 		log.Println("error on get visits", err)
 		http.Error(w, "internal server error", http.StatusInternalServerError)

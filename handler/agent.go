@@ -71,7 +71,7 @@ func (as *ApiServer) CreateAgentHandle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := as.DB.CreateApartment(agent); err != nil {
+	if err := as.DB.CreateAgent(agent); err != nil {
 		log.Println("error on create user data", err)
 		http.Error(w, "Error on unmarshal info from body", 500)
 		return

@@ -49,7 +49,7 @@ func main() {
 	routes.HandleFunc("/api/visit/all", apiServer.GetAllVisitsHandle).Methods("GET")
 
 	routes.HandleFunc("/api/apartment/{id:[0-9]+}", apiServer.GetApartmentHandle).Methods("GET")
-	routes.HandleFunc("/api/apartment/all", apiServer.GetAllApartmentsHandle).Methods("GET")
+	routes.HandleFunc("/api/apartment/{userId:[0-9]+}", apiServer.GetVisitApartmentsByUserHandle).Methods("GET")
 
 	routes.HandleFunc("/api/agent/{id:[0-9]+}", apiServer.GetAgentHandle).Methods("GET")
 	routes.HandleFunc("/api/agent/all", apiServer.GetAllAgentsHandle).Methods("GET")

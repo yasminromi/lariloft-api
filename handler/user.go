@@ -59,7 +59,7 @@ func (as *ApiServer) LoginUserHandle(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	name := vars["name"]
 
-	user, err := as.DB.GetUserByName(name)
+	_, err := as.DB.GetUserByName(name)
 	if err != nil {
 		log.Println("error on get user", err)
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
